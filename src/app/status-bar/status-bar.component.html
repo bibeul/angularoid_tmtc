@@ -1,7 +1,7 @@
 <div class="black-enemy"></div>
 <div class="black-you"></div>
-<div class="hp-enemy"></div>
-<div class="hp-you" [ngStyle]="{width: battleService.pokemon1.hp}"></div>
+<div class="hp-enemy" [ngStyle]="{width: battleService.getHpStatusBarPokemon2()}"></div>
+<div class="hp-you" [ngStyle]="{width: battleService.getHpStatusBarPokemon1()}"></div>
 <img class ="lifebar-enemy" src="assets/Lifebar-enemy.png"  width="400" height="400"/>
 <img class ="lifebar" src="assets/Lifebar.png"  width="400" height="400"/>
 

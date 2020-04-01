@@ -12,6 +12,7 @@
     "importHelpers": true,
     "target": "es2019",
     "types": ["jest"],
+    "emitDecoratorMetadata": true,
     "lib": [
       "es2018",
       "dom"

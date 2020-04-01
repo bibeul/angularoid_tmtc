@@ -9,7 +9,7 @@ import { PauseButtonComponent } from './pause-button/pause-button.component';
 import { PokemonSelectionComponent } from './pokemon-selection/pokemon-selection.component';
 import {ColoredLogDirective} from './directive/coloredLog.directive';
 import {LogService} from './services/log.service';
-import {Battle} from '../logic/Battle';
+import {BattleService} from './services/battle.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import {Battle} from '../logic/Battle';
   ],
   providers: [
     LogService,
-    Battle
+    BattleService
   ],
   bootstrap: [AppComponent]
 })

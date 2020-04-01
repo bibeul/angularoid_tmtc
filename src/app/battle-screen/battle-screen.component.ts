@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Battle} from '../../logic/Battle';
 import {Pokemon} from '../../logic/Pokemon';
 import {LogType, Type, typeObect} from '../../logic/Type';
 import {RandomTool} from '../../logic/RandomTool';
@@ -17,7 +16,7 @@ import {BattleService} from '../services/battle.service';
 export class BattleScreenComponent implements OnInit {
   text: string;
   logs: Logs[];
-  battle: Battle;
+  startDate: Date = undefined;
 
   constructor(public logService: LogService, public battleService: BattleService) {
     this.text = '';
@@ -35,6 +34,7 @@ export class BattleScreenComponent implements OnInit {
   }
 
   handlePause(initialState: boolean){
+    this.startDate = this.logs.length === 0  ? new Date() : this.startDate;
     this.battleService.isPaused = initialState;
   }
 }

@@ -7,7 +7,9 @@
 <br/>
 <br/>
 <p>{{battleService.pokemon1.hp}}</p>
+<p [hidden]="startDate === undefined">{{startDate | date: 'yyyy-MM-dd hh:mm:ss'}}</p>
 <app-pause-button [isPaused]="battleService.isPaused" (pause)="handlePause($event)"></app-pause-button>
 <div *ngFor="let log of logService.getLogs()" [ngClass]="log.logType" [coloredLog]="log.color">
+
   {{log.log}}
 </div>

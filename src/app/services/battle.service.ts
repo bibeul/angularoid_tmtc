@@ -1,24 +1,40 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {Pokemon} from '../../logic/Pokemon';
 import {RandomTool} from '../../logic/RandomTool';
 import {LogService} from './log.service';
 import {Logs} from '../../logic/Log';
 import {LogType, Type} from '../../logic/Type';
 import {Attack} from '../../logic/Attack';
+import {DecimalPipe} from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class BattleService {
 // tslint:disable-next-line:ban-types
   public intervalId;
   public typeDict: Object;
-  public isPaused: boolean = true;
+  public isPaused = true;
   public randomTool : RandomTool;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
+  private decimalPipe: DecimalPipe;
+  constructor(private logger: LogService, @Inject(LOCALE_ID) private locale: string){
+    this.decimalPipe = new DecimalPipe(locale);
+  }
 
-  constructor(private logger: LogService){
+  getHpStatusBarPokemon1(): string{
+    let hpyouValue = ((this.pokemon1.hp / this.pokemon1.hpmax) * 100);
+    hpyouValue = hpyouValue >= 0 ? hpyouValue : 0;
+    console.log(`${hpyouValue}px`);
+    return `${hpyouValue}px`;
+  }
+
+  getHpStatusBarPokemon2(): string{
+    let hpyouValue = ((this.pokemon2.hp / this.pokemon2.hpmax) * 100);
+    hpyouValue = hpyouValue >= 0 ? hpyouValue : 0;
+    return `${hpyouValue}px`;
   }
 
   setTypeDict(typeDict: Array<Object>){
@@ -51,7 +67,6 @@ export class BattleService {
         const pokemonOrder: Pokemon[] = this.priority(this.pokemon1, this.pokemon2);
 
         this.round(pokemonOrder[0], pokemonOrder[1]);
-
         if (!this.pokemon1.isAlive()) {
           this.logger.addLog(new Logs(`${this.pokemon1.name} est mort !`, LogType.DEATH));
           winner = this.pokemon2;
@@ -64,7 +79,7 @@ export class BattleService {
           clearInterval(this.intervalId);
           return;
         }
-      }, 400);
+      }, 1000);
     });
   }
   // L Level P
@@ -83,16 +98,17 @@ export class BattleService {
     const accuracy = this.random(moove.accuracy); // this return 1 or 0
 
     let damage = (basedamage * multiplicator);
-    damage = damage + (damage * critical) * accuracy;
+    damage = (damage + (damage * critical) ) * accuracy;
 
     if (accuracy === 1){
       this.displayWeakness(multiplicator);
       this.displayDamageTaken(receiver, damage);
     }else{
+      console.log(accuracy);
       this.displayAttackMissed(accuracy);
     }
 
-    this.logger.addLog(new Logs(receiver.name + ' perd ' + damage + ' hp ', LogType.ATTACK, receiver.color));
+    this.logger.addLog(new Logs(receiver.name + ' perd ' + this.decimalPipe.transform(damage, '1.2') + ' hp ', LogType.ATTACK, receiver.color));
     receiver.hp = receiver.hp - damage;
   }
 
@@ -163,7 +179,7 @@ export class BattleService {
   }
 
   displayDamageTaken(receiver: Pokemon, damage: number): void{
-    this.logger.addLog(new Logs(receiver.name + ' subit ' + damage + ' damage ', LogType.ATTACK, receiver.color));
+    this.logger.addLog(new Logs(receiver.name + ' subit ' + this.decimalPipe.transform(damage, '1.2') + ' damage ', LogType.ATTACK, receiver.color));
   }
 
   displayAttackMissed(isMissed: number){

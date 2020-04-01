@@ -13,9 +13,4 @@ export class StatusBarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  ngOnChanges() :void{
-    console.log("NIKETAMER");
-  }
-
 }

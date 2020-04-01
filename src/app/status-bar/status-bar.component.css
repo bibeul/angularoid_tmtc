@@ -2,7 +2,7 @@
   font-family: "Pokemon";
   font-style: normal;
   font-weight: normal;
-  src: local('Pokemon Fire Red Regular'), url('../../assets/pokemon_fire_red.woff') format('woff');
+  src: local('Pokemon Fire Red Regular'), url('../../assets/font.ttf') format('woff');
 }
 
 .lifebar {
@@ -23,10 +23,10 @@
 
 .black-enemy{
   position: absolute;
-  width: 77px;
+  width: 100px;
   height: 25px;
   background-color: black;
-  left: 63px;
+  left: 75px;
   top: 70px;
 }
 
@@ -44,7 +44,7 @@
   width: 100px;
   height: 25px;
   background-color: green;
-  left: 75px;
+  left: 78px;
   top: 70px;
   opacity: 1;
 }
@@ -54,7 +54,7 @@
   height: 40px;
   background-color: green;
   top: 210px;
-  left: 290px;
+  left: 293px;
   width:97px;
 }
 
