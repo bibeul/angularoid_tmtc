@@ -1,12 +1,13 @@
 <p>battle-screen works!</p>
 <div class="screen">
   <img src="assets/185.png" width="400" height="300"/>
-  <app-status-bar></app-status-bar>
+  <app-status-bar [battleService]="battleService" ></app-status-bar>
 </div>
 <br/>
 <br/>
 <br/>
-<app-pause-button [isPaused]="battle.isPaused" (pause)="handlePause($event)"></app-pause-button>
-<div *ngFor="let log of logs">
-  {{log}}
+<p>{{battleService.pokemon1.hp}}</p>
+<app-pause-button [isPaused]="battleService.isPaused" (pause)="handlePause($event)"></app-pause-button>
+<div *ngFor="let log of logService.getLogs()" [ngClass]="log.logType" [coloredLog]="log.color">
+  {{log.log}}
 </div>

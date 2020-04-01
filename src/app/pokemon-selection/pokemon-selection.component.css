@@ -1,0 +1,8 @@
+.screen {
+  position: relative;
+}
+
+.pokemon-choice {
+  position: relative;
+  display: inline-block;
+}

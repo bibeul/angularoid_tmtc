@@ -10,6 +10,7 @@ describe('Test Battle', () => {
     let chenipan;
     let ferossinge;
     let battle: Battle;
+
     beforeEach(() => {
         const random = jest.fn().mockReturnValueOnce(false);
         jest.mock('../../src/logic/RandomTool', () => {

@@ -20,6 +20,19 @@ export enum Type {
     FIGHTING = 'FIGHTING'
 }
 
+export enum LogType {
+  WINNER = 'WINNER',
+  DEATH = 'DEATH',
+  ATTACK = 'ATTACK',
+  DODGE = 'DODGE',
+  MISS = 'MISS',
+  CRIT = 'CRIT',
+  EFFECTIVE = 'EFFECTIVE',
+  VERY_EFFECTIVE = 'VERY_EFFECTIVE',
+  NOT_EFFECTIVE = 'NOT_EFFECTIVE',
+  NO_EFFECT = 'NO_EFFECT'
+}
+
 export const typeObect = [{name: 'NORMAL', immunes: ['GHOST'], weaknesses: ['ROCK', 'STEEL'], strengths: []},
   {name: 'FIRE', immunes: [], weaknesses: ['FIRE', 'WATER', 'ROCK', 'DRAGON'], strengths: ['GRASS', 'ICE', 'BUG', 'STEEL']},
   {name: 'WATER', immunes: [], weaknesses: ['WATER', 'GRASS', 'DRAGON'], strengths: ['FIRE', 'GROUND', 'ROCK']},

@@ -1,0 +1,6 @@
+<p>pokemon-selection works!</p>
+<div class="screen">
+  <div class="pokemon-choice" *ngFor="let pokemon of ''.repeat(18), let x = index">
+    <img src="asset/sprite-pokemon/{{x}}.gif" width="100px" height="100ox" (click)="onSelect(x)">
+  </div>
+</div>

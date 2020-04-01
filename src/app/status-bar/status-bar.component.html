@@ -1,3 +1,11 @@
-<img  class ="lifebar-enemy" src="assets/Lifebar-enemy.png"  width="400" height="400"/>
-<img  class ="lifebar" src="assets/Lifebar.png"  width="400" height="400"/>
-<label class = "level">11</label>
+<div class="black-enemy"></div>
+<div class="black-you"></div>
+<div class="hp-enemy"></div>
+<div class="hp-you" [ngStyle]="{width: battleService.pokemon1.hp}"></div>
+<img class ="lifebar-enemy" src="assets/Lifebar-enemy.png"  width="400" height="400"/>
+<img class ="lifebar" src="assets/Lifebar.png"  width="400" height="400"/>
+
+<label class="pokemon-name">{{battleService.pokemon1.name}}</label>
+<label class="pokemon-name-enemy">{{battleService.pokemon2.name}}</label>
+<label class = "level">{{battleService.pokemon1.level}}</label>
+<label class = "level-enemy">{{battleService.pokemon2.level}}</label>
