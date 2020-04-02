@@ -10,6 +10,8 @@ import { PokemonSelectionComponent } from './pokemon-selection/pokemon-selection
 import {ColoredLogDirective} from './directive/coloredLog.directive';
 import {LogService} from './services/log.service';
 import {BattleService} from './services/battle.service';
+import { PokemonComponent } from './pokemon/pokemon.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -18,11 +20,13 @@ import {BattleService} from './services/battle.service';
     StatusBarComponent,
     PauseButtonComponent,
     PokemonSelectionComponent,
-    ColoredLogDirective
+    ColoredLogDirective,
+    PokemonComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     LogService,

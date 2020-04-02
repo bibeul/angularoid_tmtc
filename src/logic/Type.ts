@@ -21,6 +21,7 @@ export enum Type {
 }
 
 export enum LogType {
+  DAMAGE = 'DAMAGE',
   WINNER = 'WINNER',
   DEATH = 'DEATH',
   ATTACK = 'ATTACK',

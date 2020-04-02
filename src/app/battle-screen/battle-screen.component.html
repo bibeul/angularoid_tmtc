@@ -1,6 +1,8 @@
 <p>battle-screen works!</p>
 <div class="screen">
   <img src="assets/185.png" width="400" height="300"/>
+  <img class="enemy-pokemon" [@enemy-hit]="enemyHit" (@enemy-hit.done)="enemyHitAnimation('')" src="assets/Chenipan.png"/>
+  <img class="your-pokemon" [@you-hit]="logService.isLastLogAttack()" (@you-hit.done)="yourHitAnimation('')" src="assets/pikachuback.png"/>
   <app-status-bar [battleService]="battleService" ></app-status-bar>
 </div>
 <br/>
@@ -8,8 +10,23 @@
 <br/>
 <p>{{battleService.pokemon1.hp}}</p>
 <p [hidden]="startDate === undefined">{{startDate | date: 'yyyy-MM-dd hh:mm:ss'}}</p>
+<button (click)="yourHitAnimation('hit')" >animation</button>
+<button (click)="enemyHitAnimation('hit')" >animation</button>
 <app-pause-button [isPaused]="battleService.isPaused" (pause)="handlePause($event)"></app-pause-button>
 <div *ngFor="let log of logService.getLogs()" [ngClass]="log.logType" [coloredLog]="log.color">
 
   {{log.log}}
+
 </div>
+
+
+
+
+<div>
+  <app-pokemon-selection>
+
+  </app-pokemon-selection>
+</div>
+
+
+

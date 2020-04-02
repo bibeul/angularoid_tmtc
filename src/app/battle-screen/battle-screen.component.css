@@ -5,3 +5,17 @@
 .DEATH {
   color: red;
 }
+
+.your-pokemon{
+  position: absolute;
+  left: 30px;
+  top: 145px;
+  width: 150px;
+}
+
+.enemy-pokemon{
+  position: absolute;
+  left: 220px;
+  top: 90px;
+  width: 150px;
+}

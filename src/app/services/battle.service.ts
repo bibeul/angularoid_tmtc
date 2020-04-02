@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Injectable, LOCALE_ID} from '@angular/core';
+import {Inject, Injectable, LOCALE_ID} from '@angular/core';
 import {Pokemon} from '../../logic/Pokemon';
 import {RandomTool} from '../../logic/RandomTool';
 import {LogService} from './log.service';
@@ -6,6 +6,8 @@ import {Logs} from '../../logic/Log';
 import {LogType, Type} from '../../logic/Type';
 import {Attack} from '../../logic/Attack';
 import {DecimalPipe} from '@angular/common';
+import { interval, Observable, Subscription } from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +21,9 @@ export class BattleService {
   public randomTool : RandomTool;
   public pokemon1: Pokemon;
   public pokemon2: Pokemon;
+  private pokemonOrder: Pokemon[];
   private decimalPipe: DecimalPipe;
+  private roundCounter = 0;
   constructor(private logger: LogService, @Inject(LOCALE_ID) private locale: string){
     this.decimalPipe = new DecimalPipe(locale);
   }
@@ -59,28 +63,25 @@ export class BattleService {
     return result;
   }
 
-  start(): Promise<Pokemon> {
-    return new Promise((resolve, reject) => {
-      this.intervalId = setInterval(() => {
-        let winner: Pokemon = this.pokemon1;
+   start(): Observable<Pokemon> {
+    return interval(1000)
+       .pipe(map(() => {
+          let winner: Pokemon = this.pokemon1;
+          if(this.roundCounter === 0){
+            this.pokemonOrder = this.priority(this.pokemon1, this.pokemon2);
+          }
 
-        const pokemonOrder: Pokemon[] = this.priority(this.pokemon1, this.pokemon2);
-
-        this.round(pokemonOrder[0], pokemonOrder[1]);
-        if (!this.pokemon1.isAlive()) {
-          this.logger.addLog(new Logs(`${this.pokemon1.name} est mort !`, LogType.DEATH));
-          winner = this.pokemon2;
-          resolve(winner);
-          clearInterval(this.intervalId);
-          return;
-        } else if (!this.pokemon2.isAlive()) {
-          this.logger.addLog(new Logs(`${this.pokemon2.name} est mort !`, LogType.DEATH));
-          resolve(winner);
-          clearInterval(this.intervalId);
-          return;
-        }
-      }, 1000);
-    });
+          this.round(this.pokemonOrder[this.roundCounter], this.pokemonOrder[(this.roundCounter + 1) % 2]);
+          this.roundCounter = (this.roundCounter + 1) % 2;
+          if (!this.pokemon1.isAlive()) {
+            this.logger.addLog(new Logs(`${this.pokemon1.name} est mort !`, LogType.DEATH));
+            winner = this.pokemon2;
+            return winner;
+          } else if (!this.pokemon2.isAlive()) {
+            this.logger.addLog(new Logs(`${this.pokemon2.name} est mort !`, LogType.DEATH));
+            return winner;
+          }
+        })).pipe(filter((v) => !!v)) as Observable<Pokemon>;
   }
   // L Level P
   // Damage = floor(floor(floor(2 * L / 5 + 2) * A * P / D) / 50) + 2
@@ -98,6 +99,7 @@ export class BattleService {
     const accuracy = this.random(moove.accuracy); // this return 1 or 0
 
     let damage = (basedamage * multiplicator);
+    console.log('accuracy' + accuracy)
     damage = (damage + (damage * critical) ) * accuracy;
 
     if (accuracy === 1){
@@ -107,17 +109,13 @@ export class BattleService {
       console.log(accuracy);
       this.displayAttackMissed(accuracy);
     }
-
     this.logger.addLog(new Logs(receiver.name + ' perd ' + this.decimalPipe.transform(damage, '1.2') + ' hp ', LogType.ATTACK, receiver.color));
     receiver.hp = receiver.hp - damage;
   }
 
-  public round(first: Pokemon, second: Pokemon){
+  public async round(first: Pokemon, second: Pokemon){
     if (!this.isPaused){
       this.attack(first, second, first.mooveSet[0]);
-      if (second.isAlive()){
-        this.attack(second, first, second.mooveSet[0]);
-      }
     }
   }
 
