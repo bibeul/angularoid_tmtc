@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BattleService} from '../services/battle.service';
+import {BattleService} from '../../logic/battle/battle.service';
 
 @Component({
   selector: 'app-status-bar',

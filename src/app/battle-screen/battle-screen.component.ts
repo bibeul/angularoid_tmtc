@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Pokemon} from '../../logic/Pokemon';
+import {Pokemon} from '../../logic/pokemon/Pokemon';
 import {LogType, Type, typeObect} from '../../logic/Type';
 import {RandomTool} from '../../logic/RandomTool';
 import {Attack} from '../../logic/Attack';
-import {Logs} from '../../logic/Log';
-import {LogService} from '../services/log.service';
-import {BattleService} from '../services/battle.service';
+import {Logs} from '../../logic/log/Log';
+import {LogService} from '../../logic/log/log.service';
+import {BattleService} from '../../logic/battle/battle.service';
 import {animate, keyframes, query, state, style, transition, trigger} from "@angular/animations";
 import {CommonModule} from "@angular/common";
 import {PokemonSelectionComponent} from '../pokemon-selection/pokemon-selection.component';
-import {PokemonService} from '../services/pokemon.service';
+import {PokemonService} from '../../logic/pokemon/pokemon.service';
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
 
 @Component({
   selector: 'app-battle-screen',
@@ -40,33 +41,38 @@ export class BattleScreenComponent implements OnInit {
   subscriber;
   youHit: string;
   enemyHit: string;
-  constructor(public logService: LogService, public battleService: BattleService, public pokemonService: PokemonService) {
+  isStarted = false;
+  constructor(public router: Router, public logService: LogService, public battleService: BattleService, public pokemonService: PokemonService, private route: ActivatedRoute) {
     this.text = '';
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const snapshot: ActivatedRouteSnapshot = this.route.snapshot;
+    const id1 = Number(snapshot.params.id1);
+    const id2 = Number(snapshot.params.id2);
     const moves = [];
-    const pokemons: Pokemon[] = [];
     const randomTool: RandomTool = new RandomTool(Math);
-    const griffe = new Attack('griffe', Type.NORMAL, 40, false, 100);
-    this.pokemonService.getAttackById(3).subscribe(attack => moves.push(Attack.createFromInterface(attack)));
-    this.pokemonService.getPokemonById(2).subscribe(pokemon => pokemons.push((Pokemon.createFromInterface(pokemon, moves, 'green'))));
-    console.log(pokemons)
-    this.battleService.setPokemon1(pokemons);
-    this.battleService.setPokemon2(new Pokemon('pikachu', [Type.ELECTRIC],1000,1,33,33,33,33,33,[griffe], 'orange'));
+
+    const griffe = new Attack('griffe', Type.NORMAL, 10, false, 100);
+    this.pokemonService.getAttackById(3).subscribe(async attack => await moves.push(Attack.createFromInterface(attack)));
+    await this.battleService.setPokemon1(Pokemon.createFromInterface(await this.pokemonService.getPokemonByIdP(id1), moves, 'green'))
+    await this.battleService.setPokemon2(Pokemon.createFromInterface(await this.pokemonService.getPokemonByIdP(id2), moves, 'orange'))
     this.battleService.setTypeDict(typeObect);
     this.battleService.setRandomTool(randomTool);
-    this.subscriber = this.battleService.start().subscribe(
-      res =>  {
-        this.logService.addLog(new Logs(`Le gagnant est ${res.name}`, LogType.WINNER));
-        this.subscriber.unsubscribe();
-      },
-      error => console.error('onError: %s', error),
-      () => this.subscriber.unsubscribe()
-    );
   }
 
   handlePause(initialState: boolean){
+    if(!this.isStarted) {
+      this.subscriber = this.battleService.start().subscribe(
+        res =>  {
+          this.logService.addLog(new Logs(`Le gagnant est ${res.name}`, LogType.WINNER));
+          this.subscriber.unsubscribe();
+        },
+        error => console.error('onError: %s', error),
+        () => this.subscriber.unsubscribe()
+      );
+      this.isStarted = true;
+    }
     this.startDate = this.logService.getLogs().length === 0  ? new Date() : this.startDate;
     this.battleService.isPaused = initialState;
   }
@@ -76,5 +82,9 @@ export class BattleScreenComponent implements OnInit {
   }
   enemyHitAnimation(hit: string){
     this.enemyHit = hit;
+  }
+
+  selectionPokemon() {
+    this.router.navigate(['/']);
   }
 }

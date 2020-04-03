@@ -8,12 +8,12 @@ import { StatusBarComponent } from './status-bar/status-bar.component';
 import { PauseButtonComponent } from './pause-button/pause-button.component';
 import { PokemonSelectionComponent } from './pokemon-selection/pokemon-selection.component';
 import {ColoredLogDirective} from './directive/coloredLog.directive';
-import {LogService} from './services/log.service';
-import {BattleService} from './services/battle.service';
+import {LogService} from '../logic/log/log.service';
+import {BattleService} from '../logic/battle/battle.service';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
-import {PokemonService} from './services/pokemon.service';
+import {PokemonService} from '../logic/pokemon/pokemon.service';
 
 function HomeComponent() {
 

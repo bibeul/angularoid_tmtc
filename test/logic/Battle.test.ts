@@ -1,6 +1,6 @@
 import {RandomTool} from '../../src/logic/RandomTool';
 import {Type, typeObect} from '../../src/logic/Type';
-import {Pokemon} from '../../src/logic/Pokemon';
+import {Pokemon} from '../../src/logic/pokemon/Pokemon';
 import {Attack} from '../../src/logic/Attack';
 import {Battle} from '../../src/logic/Battle';
 

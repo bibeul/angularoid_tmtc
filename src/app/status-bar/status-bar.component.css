@@ -54,44 +54,47 @@
   height: 40px;
   background-color: green;
   top: 210px;
-  left: 293px;
+  left: 292px;
   width:97px;
 }
 
 .level{
-  font-size:15px;
+  font-size: 10px;
   position: absolute;
   top: 210px;
-  left: 374px;
+  left: 371px;
   height:auto ;
   font-family: "Pokemon";
+  opacity:0.8;
 }
 
 .level-enemy{
-  font-size: 15px;
+  font-size: 10px;
   position: absolute;
-  max-width: 10%;
-  top: 60px;
+  top: 59px;
   left: 160px;
   height: 40px;
   font-family: "Pokemon";
+  opacity: 0.8;
 }
 
 .pokemon-name{
-  font-size:15px;
+  font-size:11px;
   position: absolute;
-  top: 210px;
-  left: 240px;
+  top: 213px;
+  left: 223px;
   max-width: 10%;
   height:auto ;
   font-family: "Pokemon";
+  opacity:0.8;
 }
 
 .pokemon-name-enemy{
-  font-size: 15px;
+  font-size: 12px;
   position: absolute;
-  top: 55px;
-  left: 30px;
+  top: 62px;
+  left: 11px;
   height: 40px;
   font-family: "Pokemon";
+  opacity:0.8;
 }

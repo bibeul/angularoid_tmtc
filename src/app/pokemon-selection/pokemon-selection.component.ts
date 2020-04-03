@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {PokemonService} from "../services/pokemon.service";
-import {map} from "rxjs/operators";
-import {Pokemon} from '../../logic/Pokemon';
+import {PokemonService} from "../../logic/pokemon/pokemon.service";
+import {Pokemon} from '../../logic/pokemon/Pokemon';
 import {Attack} from '../../logic/Attack';
 import {Type} from '../../logic/Type';
 import {Router} from "@angular/router";
@@ -19,10 +18,10 @@ export class PokemonSelectionComponent implements OnInit {
   private pokemonApiUrl = 'https://pokeapi.co/api/v2/pokemon/'
   public listOfSprite: number[];
   public pokemon;
-  private pokemon1: Pokemon;
-  private pokemon2: Pokemon;
-  private pokemon1Id: number;
-  private pokemon2Id: number;
+  public pokemon1: Pokemon = undefined;
+  public pokemon2: Pokemon = undefined;
+  public pokemon1Id: number = undefined;
+  public pokemon2Id: number = undefined;
   public listOfPokemon;
 
   constructor(public router: Router, private pokemonService: PokemonService) {
@@ -32,7 +31,6 @@ export class PokemonSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.counter(151);
-    this.getPokemons(1)
   }
 
   private getPokemons(length): [] {
@@ -47,6 +45,12 @@ export class PokemonSelectionComponent implements OnInit {
     return this.listOfPokemon;
   }
 
+  getPokemon(id: number): Pokemon{
+    let moves = [];
+    this.pokemonService.getPokemonById(id).subscribe(pokemon => (this.pokemon = (Pokemon.createFromInterface(pokemon, moves))));
+    return this.pokemon;
+  }
+
   public counter(length): number[] {
     for(let i = 1; i <= length; i++){
       this.listOfSprite.push(i);
@@ -59,31 +63,39 @@ export class PokemonSelectionComponent implements OnInit {
   }
 
   SelectYour(id: number): void {
-    let moves = [];
-    this.pokemonService.getPokemonById(id).subscribe(pokemon => (this.pokemon1 = (Pokemon.createFromInterface(pokemon, moves))));
-    this.pokemon1Id =id;
+    if (id != undefined) {
+      this.pokemon1 = this.getPokemon(id);
+      this.pokemon1Id =id;
+    }
   }
 
   SelectEnnemy(id: number): void {
-    let moves = [];
-    this.pokemonService.getPokemonById(id).subscribe(pokemon => (this.pokemon2 = (Pokemon.createFromInterface(pokemon, moves))));
-    this.pokemon2Id =id;
+    if( id != undefined) {
+      this.pokemon2 = this.getPokemon(id);
+      this.pokemon2Id = id;
+    }
   }
 
   getYourPokemon(): Pokemon{
     return this.pokemon1;
   }
 
+  getYourPokemonId(): number{
+    return this.pokemon1Id;
+  }
+
   getEnnemyPokemon(): Pokemon{
     return this.pokemon2;
   }
 
-  fight(pokemon1: Pokemon, pokemon2: Pokemon) {
-    if(pokemon1 != undefined && pokemon2 != undefined){
-      this.router.navigate(['/battle/', pokemon1, pokemon2]);
+  getEnnemyPokemonId(): number{
+    return this.pokemon2Id;
+  }
+
+  fight(pokemon1Id: number, pokemon2Id: number) {
+    if(pokemon1Id != undefined && pokemon2Id != undefined){
+      this.router.navigate(['/battle/', pokemon1Id, pokemon2Id]);
     }
   }
 
 }
-
-

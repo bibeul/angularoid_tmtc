@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Logs} from '../../logic/Log';
-import {LogType} from '../../logic/Type';
+import {Logs} from './Log';
+import {LogType} from '../Type';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class LogService {
 
   getLogs(): Logs[] {
     return this.logs;
+  }
+
+  getLastLogs(): Logs[]{
+      return this.logs.slice(Math.max(this.logs.length - 5, 0));
   }
 
   addLog(log: Logs): void {

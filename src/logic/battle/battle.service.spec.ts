@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BattleService } from './battle.service';
-import { RandomTool} from '../../logic/RandomTool';
-import {Attack} from '../../logic/Attack';
-import {LogType, Type, typeObect} from '../../logic/Type';
-import {Pokemon} from '../../logic/Pokemon';
-import {Logs} from '../../logic/Log';
+import { RandomTool} from '../RandomTool';
+import {Attack} from '../Attack';
+import {LogType, Type, typeObect} from '../Type';
+import {Pokemon} from '../pokemon/Pokemon';
+import {Logs} from '../log/Log';
 
 describe('BattleService', () => {
   let service: BattleService;

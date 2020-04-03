@@ -1,23 +1,32 @@
-<p>battle-screen works!</p>
 <div class="screen">
   <img src="assets/185.png" width="400" height="300"/>
   <img class="enemy-pokemon" [@enemy-hit]="logService.isLastLogAttack()" (@enemy-hit.done)="enemyHitAnimation('')" [src]="battleService.pokemon2.front_sprite_url"/>
   <img class="your-pokemon" [@you-hit]="logService.isLastLogAttack()" (@you-hit.done)="yourHitAnimation('')" [src]="battleService.pokemon1.back_sprite_url"/>
   <app-status-bar [battleService]="battleService" ></app-status-bar>
+  <div class="logs">
+    <img src="assets/box.png"  width="400" height="200"/>
+    <div class ="labels-log">
+    <div  *ngFor="let log of logService.getLastLogs()" [ngClass]="log.logType" [coloredLog]="log.color">
+
+      {{log.log}}
+
+    </div>
+    </div>
+  </div>
 </div>
-<br/>
-<br/>
-<br/>
-<p>{{battleService.pokemon1.hp}}</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <p [hidden]="startDate === undefined">{{startDate | date: 'yyyy-MM-dd hh:mm:ss'}}</p>
-<button (click)="yourHitAnimation('hit')" >animation</button>
-<button (click)="enemyHitAnimation('hit')" >animation</button>
+<button (click)="selectionPokemon()" >Pokemon selection</button>
 <app-pause-button [isPaused]="battleService.isPaused" (pause)="handlePause($event)"></app-pause-button>
-<div *ngFor="let log of logService.getLogs()" [ngClass]="log.logType" [coloredLog]="log.color">
-
-  {{log.log}}
-
-</div>
 
 
 

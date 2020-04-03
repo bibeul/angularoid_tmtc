@@ -1,4 +1,4 @@
-import {Pokemon} from "../../src/logic/Pokemon";
+import {Pokemon} from "../../src/logic/pokemon/Pokemon";
 import {Type} from "../../src/logic/Type";
 
 

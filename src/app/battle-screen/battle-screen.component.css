@@ -10,12 +10,24 @@
   position: absolute;
   left: 30px;
   top: 145px;
-  width: 150px;
+  width: 180px;
 }
 
 .enemy-pokemon{
   position: absolute;
   left: 220px;
-  top: 90px;
+  top: 87px;
   width: 150px;
 }
+
+.logs{
+  position: absolute;
+  top: 297px;
+}
+.labels-log{
+  position: absolute;
+  top: 30px;
+  width: 300px;
+  left: 20px;
+}
+

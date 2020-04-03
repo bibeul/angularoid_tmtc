@@ -1,10 +1,10 @@
 import {Inject, Injectable, LOCALE_ID} from '@angular/core';
-import {Pokemon} from '../../logic/Pokemon';
-import {RandomTool} from '../../logic/RandomTool';
-import {LogService} from './log.service';
-import {Logs} from '../../logic/Log';
-import {LogType, Type} from '../../logic/Type';
-import {Attack} from '../../logic/Attack';
+import {Pokemon} from '../pokemon/Pokemon';
+import {RandomTool} from '../RandomTool';
+import {LogService} from '../log/log.service';
+import {Logs} from '../log/Log';
+import {LogType, Type} from '../Type';
+import {Attack} from '../Attack';
 import {DecimalPipe} from '@angular/common';
 import { interval, Observable, Subscription } from 'rxjs';
 import {filter, map} from 'rxjs/operators';
@@ -24,8 +24,16 @@ export class BattleService {
   private pokemonOrder: Pokemon[];
   private decimalPipe: DecimalPipe;
   private roundCounter = 0;
+  public pokemons: Pokemon[];
   constructor(private logger: LogService, @Inject(LOCALE_ID) private locale: string){
     this.decimalPipe = new DecimalPipe(locale);
+  }
+
+  setPokemons(pokemons: Pokemon[]): void {
+    console.log(this.pokemons);
+    this.pokemons = pokemons;
+    this.pokemon1 = pokemons[0];
+    this.pokemon2 = pokemons[1];
   }
 
   getHpStatusBarPokemon1(): string{
@@ -44,12 +52,11 @@ export class BattleService {
   setTypeDict(typeDict: Array<Object>){
     this.typeDict = this.loadTypeDict(typeDict);
   }
-  setPokemon1(pokemon: Pokemon[]): void {
-    pokemon.map(e => console.log(e))
-    this.pokemon1 = pokemon[0];
+  async setPokemon1(pokemon: Pokemon): Promise<void>  {
+    this.pokemon1 = pokemon;
   }
 
-  setPokemon2(pokemon: Pokemon): void {
+  async setPokemon2(pokemon: Pokemon): Promise<void> {
     this.pokemon2 = pokemon;
   }
   setRandomTool(randomTool: RandomTool){
