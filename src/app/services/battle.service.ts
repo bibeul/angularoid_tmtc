@@ -44,8 +44,9 @@ export class BattleService {
   setTypeDict(typeDict: Array<Object>){
     this.typeDict = this.loadTypeDict(typeDict);
   }
-  setPokemon1(pokemon: Pokemon): void {
-    this.pokemon1 = pokemon;
+  setPokemon1(pokemon: Pokemon[]): void {
+    pokemon.map(e => console.log(e))
+    this.pokemon1 = pokemon[0];
   }
 
   setPokemon2(pokemon: Pokemon): void {
@@ -66,6 +67,8 @@ export class BattleService {
    start(): Observable<Pokemon> {
     return interval(1000)
        .pipe(map(() => {
+          this.pokemon1.owner = 0;
+          this.pokemon2.owner = 1;
           let winner: Pokemon = this.pokemon1;
           if(this.roundCounter === 0){
             this.pokemonOrder = this.priority(this.pokemon1, this.pokemon2);
@@ -99,17 +102,16 @@ export class BattleService {
     const accuracy = this.random(moove.accuracy); // this return 1 or 0
 
     let damage = (basedamage * multiplicator);
-    console.log('accuracy' + accuracy)
     damage = (damage + (damage * critical) ) * accuracy;
 
     if (accuracy === 1){
       this.displayWeakness(multiplicator);
       this.displayDamageTaken(receiver, damage);
     }else{
-      console.log(accuracy);
       this.displayAttackMissed(accuracy);
     }
-    this.logger.addLog(new Logs(receiver.name + ' perd ' + this.decimalPipe.transform(damage, '1.2') + ' hp ', LogType.ATTACK, receiver.color));
+
+    this.logger.addLog(new Logs(receiver.name + ' perd ' + this.decimalPipe.transform(damage, '1.2') + ' hp ', LogType.ATTACK, receiver.color,attacker.owner));
     receiver.hp = receiver.hp - damage;
   }
 

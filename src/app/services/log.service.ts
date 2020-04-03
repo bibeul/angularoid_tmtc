@@ -19,12 +19,16 @@ export class LogService {
 
   addLog(log: Logs): void {
     this.lastLog = log;
+    console.log(log.pokemon)
     this.logs.push(log);
   }
 
   isLastLogAttack(): string {
-    console.log(this.lastLog.logType)
-    console.log(this.lastLog.logType === LogType.ATTACK ? 'hit' : '');
-    return this.lastLog.logType === LogType.ATTACK ? 'hit' : '';
+    if(this.lastLog.pokemon === 0 ){
+      return 'you-hit';
+    }else if (this.lastLog.pokemon === 1){
+      return 'enemy-hit';
+    }
+    return '';
   }
 }

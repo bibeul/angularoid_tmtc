@@ -11,7 +11,13 @@ import {ColoredLogDirective} from './directive/coloredLog.directive';
 import {LogService} from './services/log.service';
 import {BattleService} from './services/battle.service';
 import { PokemonComponent } from './pokemon/pokemon.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
+import {PokemonService} from './services/pokemon.service';
+
+function HomeComponent() {
+
+}
 
 @NgModule({
   declarations: [
@@ -26,11 +32,13 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [
     LogService,
-    BattleService
+    BattleService,
+    PokemonService
   ],
   bootstrap: [AppComponent]
 })

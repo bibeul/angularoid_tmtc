@@ -1,8 +1,8 @@
 <p>battle-screen works!</p>
 <div class="screen">
   <img src="assets/185.png" width="400" height="300"/>
-  <img class="enemy-pokemon" [@enemy-hit]="enemyHit" (@enemy-hit.done)="enemyHitAnimation('')" src="assets/Chenipan.png"/>
-  <img class="your-pokemon" [@you-hit]="logService.isLastLogAttack()" (@you-hit.done)="yourHitAnimation('')" src="assets/pikachuback.png"/>
+  <img class="enemy-pokemon" [@enemy-hit]="logService.isLastLogAttack()" (@enemy-hit.done)="enemyHitAnimation('')" [src]="battleService.pokemon2.front_sprite_url"/>
+  <img class="your-pokemon" [@you-hit]="logService.isLastLogAttack()" (@you-hit.done)="yourHitAnimation('')" [src]="battleService.pokemon1.back_sprite_url"/>
   <app-status-bar [battleService]="battleService" ></app-status-bar>
 </div>
 <br/>
@@ -17,15 +17,6 @@
 
   {{log.log}}
 
-</div>
-
-
-
-
-<div>
-  <app-pokemon-selection>
-
-  </app-pokemon-selection>
 </div>
 
 

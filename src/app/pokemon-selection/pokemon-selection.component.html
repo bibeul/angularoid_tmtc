@@ -1,9 +1,24 @@
-<p>pokemon-selection!</p>
-<div class="pokemon-selection">
-  <div class="pokemon-choice" *ngFor="let n of listOfSprite, let i = index">
-      <img src="assets/sprite-pokemon/{{n}}.gif" width="100px" height="100px" (click)="onSelect(n)">
-  </div>
-  <div>
-    <p>Selected pokemon: {{getSelectedPokemon()}}</p>
+<div class="selection">
+  <h1>pokemon-selection!</h1>
+
+  <div class="pokemon-selection">
+    <div class="pokemon-section">
+      <div class="pokemon-choice" *ngFor="let n of listOfSprite, let i = index">
+        <img src="assets/sprite-pokemon/{{n}}.gif" width="100px" height="100px" (click)="SelectYour(n)">
+      </div>
+      <div>
+        <p>Your pokemon: {{getYourPokemon().name}}</p>
+      </div>
+    </div>
+    <button class="rounded-button" (click)="fight(getYourPokemon(), getEnnemyPokemon())"> fight </button>
+    <div class="pokemon-section">
+      <div class="pokemon-choice" *ngFor="let n of listOfSprite, let i = index">
+        <img src="assets/sprite-pokemon/{{n}}.gif" width="100px" height="100px" (click)="SelectEnnemy(n)">
+      </div>
+      <div>
+        <p>Ennemy pokemon: {{getEnnemyPokemon().name}}</p>
+      </div>
+    </div>
   </div>
 </div>
+

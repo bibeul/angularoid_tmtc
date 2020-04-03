@@ -2,11 +2,44 @@
   position: relative;
 }
 
+.selection {
+  text-align: center;
+}
+
+.rounded-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  height: 100px;
+  width: 100px;
+  color: white;
+  font-size: 2em;
+  background-color: red;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.rounded-button:active {
+  background-color: darkred;
+  color: lightgrey;
+}
+
 .pokemon-selection {
-  width: 665px;
-  height: 705px;
+  height: 770px;
   background-color: #6DC8CD;
   position: relative;
+  display: inline-block;
+}
+
+.pokemon-section {
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 665px;
+  height: 750px;
+  background-color: #6DC8CD;
+  position: relative;
+  display: inline-block;
 }
 
 .pokemon-choice {
